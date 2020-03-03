@@ -1,17 +1,27 @@
-import { Sequelize, Model, DataTypes } from 'sequelize'
-const sequelize = new Sequelize('sqlite::memory:');
+import dotenv from 'dotenv'
+dotenv.config()
 
-class User extends Model {}
-User.init({
-  username: DataTypes.STRING,
-  birthday: DataTypes.DATE
-}, { sequelize, modelName: 'user' });
+import { getPoolConexao } from './services/infra/SQL/SQL.service';
+import { Cliente } from './models/sequelize/cliente.model';
+import { Fundo } from './models/sequelize/fundo.model';
+import { Proposta } from './models/sequelize/proposta.model';
 
-sequelize.sync()
-  .then(() => User.create({
-    username: 'HGELLO WROLS',
-    birthday: new Date(1980, 6, 20)
-  }))
-  .then((jane: { toJSON: () => any; }) => {
-    console.log(jane.toJSON());
+const sequelize = getPoolConexao()
+sequelize.query('DROP DATABASE `extratos-prev-zurich`', { raw: true })
+sequelize.query('CREATE DATABASE `extratos-prev-zurich`', { raw: true })
+sequelize.query('SET FOREIGN_KEY_CHECKS = 0')
+  .then(function () {
+    return Cliente.sync({ force: true });
+  }).then(function () {
+    return Fundo.sync({ force: true });
+  }).then(function () {
+    return Proposta.sync({ force: true });
+  })
+  .then(function () {
+    return sequelize.query('SET FOREIGN_KEY_CHECKS = 1')
+  })
+  .then(function () {
+    console.log('Database synchronised.');
+  }, function (err) {
+    console.log(err);
   });
