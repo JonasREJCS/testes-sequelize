@@ -1,4 +1,4 @@
-import { Model, STRING, INTEGER, DATE, DECIMAL } from 'sequelize'
+import { Model, DataTypes } from 'sequelize'
 import { getPoolConexao } from '../../services/infra/SQL/SQL.service'
 import { Cliente } from './cliente.model'
 import { Fundo } from './fundo.model'
@@ -7,32 +7,32 @@ const sequelize = getPoolConexao()
 export class Proposta extends Model { }
 Proposta.init({
   propostaId: {
-    type: INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER.UNSIGNED,
     autoIncrement: true,
     primaryKey: true,
   },
   codigoProduto: {
-    type: INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false
   },
   numeroProposta: {
-    type: STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   tipoProduto: {
-    type: STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   criterioTributacao: {
-    type: STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   dataImplantacao: {
-    type: DATE,
+    type: DataTypes.DATE,
     allowNull: true,
   },
   saldoAtual: {
-    type: DECIMAL,
+    type: DataTypes.DECIMAL,
     allowNull: false,
   }
 }, {

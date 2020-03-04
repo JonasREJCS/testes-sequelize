@@ -1,34 +1,33 @@
-import { Model, STRING, INTEGER } from 'sequelize'
+import { Model, DataTypes } from 'sequelize'
 import { getPoolConexao } from '../../services/infra/SQL/SQL.service'
-// import { Proposta } from './proposta.model'
 
 const sequelize = getPoolConexao()
 
 export class Fundo extends Model { }
 Fundo.init({
   fundoIdUnico: {
-    type: INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER.UNSIGNED,
     autoIncrement: true,
     primaryKey: true,
   },
   fundoId: {
-    type: INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false
   },
   codigoProduto: {
-    type: INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false
   },
   nomeFundo: {
-    type: STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   CNPJ: {
-    type: STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   numeroSusep: {
-    type: STRING,
+    type: DataTypes.STRING,
     allowNull: false
   }
 }, {

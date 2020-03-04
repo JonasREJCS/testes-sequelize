@@ -1,25 +1,29 @@
 import { Model, DataTypes } from 'sequelize'
 import { getPoolConexao } from '../../services/infra/SQL/SQL.service'
+import { Empresa } from './empresa.model'
 
 const sequelize = getPoolConexao()
 
-export class Cliente extends Model { }
-Cliente.init({
-  clienteId: {
+export class Equipe extends Model { }
+Equipe.init({
+  equipeId: {
     type: DataTypes.INTEGER.UNSIGNED,
     autoIncrement: true,
     primaryKey: true,
+    allowNull: false,
   },
-  nomeCliente: {
+  nomeEquipe: {
     type: DataTypes.STRING,
     allowNull: false
-  },
-  CPF: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true
   }
 }, {
   sequelize,
-  modelName: 'Cliente'
+  modelName: 'Equipe'
+})
+
+Equipe.hasOne(Empresa, {
+  foreignKey: 'empresaId',
+  foreignKeyConstraint: true,
+  onUpdate: 'NO ACTION',
+  onDelete: 'NO ACTION'
 })

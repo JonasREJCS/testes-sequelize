@@ -3,23 +3,19 @@ import { getPoolConexao } from '../../services/infra/SQL/SQL.service'
 
 const sequelize = getPoolConexao()
 
-export class Cliente extends Model { }
-Cliente.init({
-  clienteId: {
+export class Empresa extends Model { }
+Empresa.init({
+  empresaId: {
     type: DataTypes.INTEGER.UNSIGNED,
     autoIncrement: true,
     primaryKey: true,
-  },
-  nomeCliente: {
-    type: DataTypes.STRING,
     allowNull: false
   },
-  CPF: {
+  nomeEmpresa: {
     type: DataTypes.STRING,
-    allowNull: false,
-    unique: true
+    allowNull: false
   }
 }, {
   sequelize,
-  modelName: 'Cliente'
+  modelName: 'Empresa'
 })
